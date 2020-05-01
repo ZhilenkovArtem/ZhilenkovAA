@@ -103,13 +103,13 @@ namespace Library
 
             switch (randomPerson.Gender)
             {
-                case GenderType.Female:
+                case GenderType.F:
                 {
                     randomPerson.Name = GetLine(pathNameFemale);
                     randomPerson.Surname = GetLine(pathSurnameFemale);
                 }
                 break;
-                case GenderType.Male:
+                case GenderType.M:
                 {
                     randomPerson.Name = GetLine(pathNameMale);
                     randomPerson.Surname = GetLine(pathSurnameMale);
@@ -130,8 +130,10 @@ namespace Library
         public static string GetLine(string path)
         {
             Random random = new Random();
-            string[] temp = File.ReadAllText(path).Split('\n');
+            string[] separator = new string[] { "\r\n" };
+            string[] temp = File.ReadAllText(path).Split(separator, StringSplitOptions.None);
             var line = temp[random.Next(temp.Length)];
+
             return line;
         }
 

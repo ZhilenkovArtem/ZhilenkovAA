@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 
 namespace Library
 {
@@ -143,22 +142,6 @@ namespace Library
             }
             return numbers;
         }
-        /// <summary>
-        /// Проверка правильности введенного числа, чтобы затем
-        /// произвести удаление человека по заданному номеру
-        /// </summary>
-        /// <param name="allegedIndex">Символы, предполагаемые номером</param>
-        public void SendDeletePersonIndex(string allegedIndex)
-        {
-            Regex regexName = new Regex("[0-9]");
-            if (!regexName.IsMatch(allegedIndex))
-            {
-                throw new FormatException("Индекс должен иметь" +
-                    " численный формат");
-            }
-            DeletePersonIndex(int.Parse(allegedIndex) - 1);
-        }
-
         /// <summary>
         /// Удаление человека по его номеру в списке
         /// </summary>

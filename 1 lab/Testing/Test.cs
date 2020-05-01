@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Library;
+using System.Text.RegularExpressions;
 
 namespace Testing
 {
@@ -10,14 +11,13 @@ namespace Testing
     /// </summary>
     public class Test
     {
+        public static PersonList persons1 = new PersonList();
         /// <summary>
         /// Точка входа
         /// </summary>
         /// <param name="args">Аргументы</param>
         static void Main(string[] args)
         {
-            var persons1 = new PersonList();
-
             while(true)
             {
                 Console.WriteLine("***Меню***");
@@ -35,197 +35,274 @@ namespace Testing
                 Console.WriteLine("10 - Очистить список");
                 Console.WriteLine("11 - Выход\n");
                 Console.Write("Ваш выбор:  ");
-                var key = Console.ReadLine();
-                Console.WriteLine();
-                switch (key)
+                try
                 {
-                    case "1":
-                        persons1.Clear();
-
-                        var persons2 = new PersonList();
-
-                        Console.WriteLine("***Создание двух списков, по три " +
-                            "элемента в каждом***\n");
-
-                        for (int j = 0; j < 3; j++)
-                        {
-                            persons1.AddPerson(Person.GetRandomPerson());
-                            Thread.Sleep(15);
-                            persons2.AddPerson(Person.GetRandomPerson());
-                            Thread.Sleep(15);
-                        }
-
-                        ShowTwoLists(persons1, persons2);
-                        Console.ReadKey();
-
-                        Console.WriteLine("***Добавление нового элемента в 1 " +
-                            "список***\n");
-
-                        persons1.AddPerson(Person.GetRandomPerson());
-
-                        ShowList(persons1);
-                        Console.ReadKey();
-
-                        Console.WriteLine("***Копирование 2го элемента из " +
-                            "1 списока во 2ой список***\n");
-
-                        persons2.AddPerson(persons1.GetPerson(1));
-
-                        ShowTwoLists(persons1, persons2);
-                        Console.ReadKey();
-
-                        Console.WriteLine("***Удаление 2го элемента из 1 " +
-                            "списка***\n");
-
-                        persons1.DeletePersonIndex(1);
-
-                        ShowTwoLists(persons1, persons2);
-                        Console.ReadKey();
-
-                        Console.WriteLine("***Очищение 2го списка " +
-                            "элементов***\n");
-
-                        persons2.Clear();
-
-                        ShowTwoLists(persons1, persons2);
-                        break;
-                    case "2":
-                        {
-                            string subkey;
-                            do
-                            {
-                                persons1.AddPerson(Person.GetRandomPerson());
-                                Console.Write("\nВ список добавлена ");
-                                ShowPerson(persons1.Length - 1, persons1);
-                                Console.WriteLine("Продолжить?" +
-                                    "(Y - для продолжения / N или любая " +
-                                    "другая клавиша - для завершения)");
-                                subkey = Console.ReadLine();
-                            }
-                            while ((subkey == "y") || (subkey == "Y"));
-                            break;
-                        }
-                    case "3":
-                        {
-                            string subkey;
-                            do
-                            {
-                                persons1.AddPerson(EnterPerson());
-                                Console.WriteLine("\nПродолжить?" +
-                                    "(Y - для продолжения / N или любая " +
-                                    "другая клавиша - для завершения)");
-                                subkey = Console.ReadLine();
-                            }
-                            while ((subkey == "y") || (subkey == "Y"));
-                        }
-                        break;
-                    case "4":
-                        try
-                        {
-                            persons1.CheckLength();
-                            ShowList(persons1);
-                        }
-                        catch (Exception exception)
-                        {
-                            if (exception is ArgumentException
-                                || exception is IndexOutOfRangeException)
-                            {
-                                Console.WriteLine($"{exception.Message}\n");
-                            }
-                        }
-                        break;
-                    case "5":
-                        try
-                        {
-                            persons1.CheckLength();
-                            Console.WriteLine("Введите индекс элемента, " +
-                                "который вы хотели бы удалить:");
-                            persons1.SendDeletePersonIndex(Console.ReadLine());
-                        }
-                        catch (Exception exception)
-                        {
-                            if (exception is ArgumentException
-                                || exception is IndexOutOfRangeException
-                                || exception is FormatException)
-                            {
-                                Console.WriteLine($"{exception.Message}\n");
-                            }
-                        }
-                        break;
-                    case "6":
-                        try
-                        {
-                            persons1.CheckLength();
-                            persons1.GetIndexDelete(
-                                EnterPerson());
-                        }
-                        catch (Exception exception)
-                        {
-                            if (exception is ArgumentException
-                                || exception is IndexOutOfRangeException)
-                            {
-                                Console.WriteLine($"{exception.Message}\n");
-                            }
-                        }
-                        break;
-                    case "7":
-                        try
-                        {
-                            persons1.CheckLength();
-                            Console.WriteLine("Введите индекс элемента, " +
-                                "который вы хотели бы найти:");
-                            ShowPerson(Int32.Parse(Console.ReadLine()) - 1,
-                                persons1);
-                        }
-                        catch (Exception exception)
-                        {
-                            if (exception is ArgumentException
-                                || exception is IndexOutOfRangeException
-                                || exception is FormatException)
-                            {
-                                Console.WriteLine($"{exception.Message}\n");
-                            }
-                        }
-                    break;
-                    case "8":
-                        try
-                        {
-                            persons1.CheckLength();
-                            int[] numbers = persons1.GetIndex(
-                                EnterPerson());
-                            Console.Write("\nНомера человека с такими " +
-                                "параметрами в списке: ");
-                            for (int i=0; i < numbers.Length; i++)
-                            {
-                                Console.Write(numbers[i] + " ");
-                            }
-                            Console.WriteLine(" ");
-                        }
-                        catch (Exception exception)
-                        {
-                            if (exception is ArgumentException
-                                || exception is IndexOutOfRangeException)
-                            {
-                                Console.WriteLine($"{exception.Message}\n");
-                            }
-                        }
-                    break;
-                    case "9":
-                        Console.Write("Количество элементов в списке: ");
-                        Console.WriteLine(persons1.Length+"\n");
-                    break;
-                    case "10":
+                    var key = Console.ReadLine();
+                    CheckingNumber(key);
+                    Console.WriteLine();
+                    switch (key)
                     {
-                        persons1.Clear();
-                        Console.WriteLine("Список очищен\n");
-                        break;
+                        case "1":
+                            DoThirdExerciseOfLab();
+                            break;
+                        case "2":
+                            AddRandomItem();
+                            break;
+                        case "3":
+                            AddItem();
+                            break;
+                        case "4":
+                            DataOutput();
+                            break;
+                        case "5":
+                            DeleteItemByIndex();
+                            break;
+                        case "6":
+                            DeleteItemByParameters();
+                            break;
+                        case "7":
+                            SearchItemByIndex();
+                            break;
+                        case "8":
+                            SearchIndexByParameters();
+                            break;
+                        case "9":
+                            Console.Write("Количество элементов в списке: ");
+                            Console.WriteLine(persons1.Length + "\n");
+                            break;
+                        case "10":
+                            {
+                                persons1.Clear();
+                                Console.WriteLine("Список очищен\n");
+                                break;
+                            }
+                        case "11":
+                            return;
                     }
-                    case "11":
-                        return;
+                }
+                catch (Exception exception)
+                {
+                    if (exception is ArgumentException
+                        || exception is IndexOutOfRangeException
+                        || exception is FormatException)
+                    {
+                        Console.WriteLine($"{exception.Message}\n");
+                    }
+                }
+                
+            }
+        }
+        
+        /// <summary>
+        /// Выполняет 3 задания Лабораторной работы 
+        /// (создание 2 списка, копирование...)
+        /// </summary>
+        static void DoThirdExerciseOfLab()
+        {
+            persons1.Clear();
+
+            var persons2 = new PersonList();
+
+            Console.WriteLine("***Создание двух списков, по три " +
+                "элемента в каждом***\n");
+
+            for (int j = 0; j < 3; j++)
+            {
+                persons1.AddPerson(Person.GetRandomPerson());
+                Thread.Sleep(15);
+                persons2.AddPerson(Person.GetRandomPerson());
+                Thread.Sleep(15);
+            }
+
+            ShowTwoLists(persons1, persons2);
+            Console.ReadKey();
+
+            Console.WriteLine("***Добавление нового элемента в 1 " +
+                "список***\n");
+
+            persons1.AddPerson(Person.GetRandomPerson());
+
+            ShowList(persons1);
+            Console.ReadKey();
+
+            Console.WriteLine("***Копирование 2го элемента из " +
+                "1 списока во 2ой список***\n");
+
+            persons2.AddPerson(persons1.GetPerson(1));
+
+            ShowTwoLists(persons1, persons2);
+            Console.ReadKey();
+
+            Console.WriteLine("***Удаление 2го элемента из 1 " +
+                "списка***\n");
+
+            persons1.DeletePersonIndex(1);
+
+            ShowTwoLists(persons1, persons2);
+            Console.ReadKey();
+
+            Console.WriteLine("***Очищение 2го списка " +
+                "элементов***\n");
+
+            persons2.Clear();
+
+            ShowTwoLists(persons1, persons2);
+        }
+        
+        /// <summary>
+        /// Добавление рандомного элемента
+        /// </summary>
+        static void AddRandomItem()
+        {
+            string subkey;
+            do
+            {
+                persons1.AddPerson(Person.GetRandomPerson());
+                Console.Write("\nВ список добавлена ");
+                ShowPerson(persons1.Length - 1, persons1);
+                Console.WriteLine("Продолжить?" +
+                    "(Y - для продолжения / N или любая " +
+                    "другая клавиша - для завершения)");
+                subkey = Console.ReadLine();
+            }
+            while ((subkey == "y") || (subkey == "Y"));
+        }
+        
+        /// <summary>
+        /// Добавление элемента, параметры которого вводит пользователь
+        /// </summary>
+        static void AddItem()
+        {
+            string subkey;
+            do
+            {
+                persons1.AddPerson(EnterPerson());
+                Console.WriteLine("\nПродолжить?" +
+                    "(Y - для продолжения / N или любая " +
+                    "другая клавиша - для завершения)");
+                subkey = Console.ReadLine();
+            }
+            while ((subkey == "y") || (subkey == "Y"));
+        }
+        
+        /// <summary>
+        /// Вывод списка со всеми элементами
+        /// </summary>
+        static void DataOutput()
+        {
+            try
+            {
+                persons1.CheckLength();
+                ShowList(persons1);
+            }
+            catch (Exception exception)
+            {
+                if (exception is ArgumentException
+                    || exception is IndexOutOfRangeException)
+                {
+                    Console.WriteLine($"{exception.Message}\n");
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Удаление элемента из списка по индексу
+        /// </summary>
+        static void DeleteItemByIndex()
+        {
+            try
+            {
+                persons1.CheckLength();
+                Console.WriteLine("Введите индекс элемента, " +
+                    "который вы хотели бы удалить:");
+                SendDeletePersonIndex(Console.ReadLine());
+                Console.WriteLine("Успшное удаление\n");
+            }
+            catch (Exception exception)
+            {
+                if (exception is ArgumentException
+                    || exception is IndexOutOfRangeException
+                    || exception is FormatException)
+                {
+                    Console.WriteLine($"{exception.Message}\n");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Удаление элемента из списка по введенным параметрам
+        /// </summary>
+        static void DeleteItemByParameters()
+        {
+            try
+            {
+                persons1.CheckLength();
+                persons1.GetIndexDelete(
+                    EnterPerson());
+                Console.WriteLine("\nУспшное удаление\n");
+            }
+            catch (Exception exception)
+            {
+                if (exception is ArgumentException
+                    || exception is IndexOutOfRangeException)
+                {
+                    Console.WriteLine($"{exception.Message}\n");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Поиск элемента из списка по индексу
+        /// </summary>
+        static void SearchItemByIndex()
+        {
+            try
+            {
+                persons1.CheckLength();
+                Console.WriteLine("Введите индекс элемента, " +
+                    "который вы хотели бы найти:");
+                ShowPerson(Int32.Parse(Console.ReadLine()) - 1,
+                    persons1);
+            }
+            catch (Exception exception)
+            {
+                if (exception is ArgumentException
+                    || exception is IndexOutOfRangeException
+                    || exception is FormatException)
+                {
+                    Console.WriteLine($"{exception.Message}\n");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Поиск индекса элемента в списке по введенным параметрам
+        /// </summary>
+        static void SearchIndexByParameters()
+        {
+            try
+            {
+                persons1.CheckLength();
+                int[] numbers = persons1.GetIndex(
+                    EnterPerson());
+                Console.Write("\nНомер человека с такими " +
+                    "параметрами в списке: ");
+                for (int i = 0; i < numbers.Length; i++)
+                {
+                    Console.Write(numbers[i] + " ");
+                }
+                Console.WriteLine(" ");
+            }
+            catch (Exception exception)
+            {
+                if (exception is ArgumentException
+                    || exception is IndexOutOfRangeException)
+                {
+                    Console.WriteLine($"{exception.Message}\n");
+                }
+            }
+        }
+        
         /// <summary>
         /// Перебор элементов списка
         /// </summary>
@@ -237,7 +314,7 @@ namespace Testing
                 ShowPerson(i, personList);
             }
         }
-
+        
         /// <summary>
         /// Вывод человека на экран
         /// </summary>
@@ -253,7 +330,7 @@ namespace Testing
             Console.WriteLine("Возраст: " + person.Age);
             Console.WriteLine($"Пол: {person.Gender}\n");
         }
-
+        
         /// <summary>
         /// Вывод первого и второго списка людей
         /// </summary>
@@ -338,6 +415,31 @@ namespace Testing
                 {
                     Console.WriteLine($"\n{formatException.Message}\n");
                 }
+            }
+        }
+        
+        /// <summary>
+        /// Проверка правильности введенного числа, чтобы затем
+        /// произвести удаление человека по заданному номеру
+        /// </summary>
+        /// <param name="indexToSend">Символы, предполагаемые номером</param>
+        public static void SendDeletePersonIndex(string indexToSend)
+        {
+            CheckingNumber(indexToSend);
+            persons1.DeletePersonIndex(int.Parse(indexToSend) - 1);
+        }
+
+        /// <summary>
+        /// Проверка правильности введенного индекса
+        /// </summary>
+        /// <param name="allegedIndex">Проверяемый индекс</param>
+        static void CheckingNumber(string allegedIndex)
+        {
+            Regex regexName = new Regex("[0-9]");
+            if (!regexName.IsMatch(allegedIndex))
+            {
+                throw new FormatException("Индекс должен иметь" +
+                    " численный формат");
             }
         }
     }
