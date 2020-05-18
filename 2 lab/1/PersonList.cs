@@ -10,14 +10,14 @@ namespace Library
         /// <summary>
         /// Список людей
         /// </summary>
-        private Person[] _persons;
+        private PersonBase[] _persons;
 
         /// <summary>
         /// Задает начальное значение списка людей
         /// </summary>
         public PersonList()
         {
-            _persons = new Person[0];
+            _persons = new PersonBase[0];
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Library
         /// </summary>
         /// <param name="index">Номер человека в списке людей</param>
         /// <returns>Параметры человека с заданным номером</returns>
-        public Person GetPerson(int index)
+        public PersonBase GetPerson(int index)
         {
             CheckIndex(index);
             return _persons[index];
@@ -47,7 +47,7 @@ namespace Library
         /// </summary>
         public void Clear()
         {
-            _persons = new Person[0];
+            _persons = new PersonBase[0];
         }
 
         /// <summary>
@@ -75,11 +75,11 @@ namespace Library
         /// Добавление человека в список людей
         /// </summary>
         /// <param name="addingPerson">Добавляемый человек</param>
-        public void AddPerson(Person addingPerson)
+        public void AddPerson(PersonBase addingPerson)
         {
-            Person[] copyPersons = _persons;
+            PersonBase[] copyPersons = _persons;
 
-            _persons = new Person[copyPersons.Length + 1];
+            _persons = new PersonBase[copyPersons.Length + 1];
             for (int i = 0; i < copyPersons.Length; i++)
             {
                 _persons[i] = copyPersons[i];
@@ -91,7 +91,7 @@ namespace Library
         /// Нахождение номера удаляемого человека по заданным параметрам
         /// </summary>
         /// <param name="deletedPerson">Удаляемый человек</param>
-        public void GetIndexDelete (Person deletedPerson)
+        public void GetIndexDelete (PersonBase deletedPerson)
         {
             bool indicator = false;
 
@@ -115,7 +115,7 @@ namespace Library
         /// </summary>
         /// <param name="presentPerson">Заданный человек</param>
         /// <returns>Список номеров</returns>
-        public int[] GetIndex(Person presentPerson)
+        public int[] GetIndex(PersonBase presentPerson)
         {
             bool indicator = false;
             
@@ -149,9 +149,9 @@ namespace Library
         public void DeletePersonIndex(int indexDelete)
         {
             CheckIndex(indexDelete);
-            Person[] copyPersons = _persons;
+            PersonBase[] copyPersons = _persons;
 
-            _persons = new Person[copyPersons.Length - 1];
+            _persons = new PersonBase[copyPersons.Length - 1];
             int count = 0;
             for (int i = 0; i < copyPersons.Length; i++)
             {

@@ -8,7 +8,7 @@ namespace Library
     /// <summary>
     /// Класс, описывающий параметры человека
     /// </summary>
-    public abstract class Person
+    public abstract class PersonBase
     {
         /// <summary>
         /// Имя человека
@@ -56,7 +56,7 @@ namespace Library
         /// <summary>
         /// Возраст
         /// </summary>
-        public int Age
+        public virtual int Age
         {
             set
             {
@@ -89,7 +89,7 @@ namespace Library
         /// Создание рандомного человека
         /// </summary>
         /// <returns>рандомный человек</returns>
-        public static Person CreateRandomPerson()
+        public static PersonBase CreateRandomPerson()
         {
             if (_random.Next(0, 2) == 0)
             {
@@ -105,7 +105,7 @@ namespace Library
         /// Создание рандомного человека с базовыми параметрами
         /// </summary>
         /// <returns>рандомный человек</returns>
-        public static void GetRandomPerson(Person randomPerson, GenderType gender = GenderType.No)
+        public static void GetRandomPerson(PersonBase randomPerson, GenderType gender = GenderType.No)
         {
             var Path = AppDomain.CurrentDomain.BaseDirectory 
                 + "\\ParametrsPerson\\";
@@ -174,7 +174,7 @@ namespace Library
         /// <returns></returns>
         public override bool Equals(object person)
         {
-            var tmpPerson = person as Person;
+            var tmpPerson = person as PersonBase;
             
             if (tmpPerson == null || person == null)
             {

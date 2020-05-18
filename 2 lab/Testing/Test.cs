@@ -20,7 +20,7 @@ namespace Testing
 
             for (int j = 0; j < 7; j++)
             {
-                people.AddPerson(Person.CreateRandomPerson());
+                people.AddPerson(PersonBase.CreateRandomPerson());
                 Thread.Sleep(15);
             }
 

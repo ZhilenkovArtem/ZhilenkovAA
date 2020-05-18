@@ -2,7 +2,10 @@
 
 namespace Library
 {
-    public class Child : Person
+    /// <summary>
+    /// Ребенок
+    /// </summary>
+    public class Child : PersonBase
     {
         /// <summary>
         /// Отец
@@ -18,6 +21,32 @@ namespace Library
         /// Воспитательное или учебное заведение (дет. сад, школа)
         /// </summary>
         public string Institution { get; set; }
+
+        /// <summary>
+        /// Возраст ребенка
+        /// </summary>
+        public override int Age
+        {
+            get
+            {
+                return base.Age;
+            }
+            set
+            {
+                if (value < 0 || value > 17)
+                {
+                    throw new ArgumentOutOfRangeException("Возраст ребенка" +
+                        " должен лежать в диапазон от 0 до 17 лет");
+                }
+                if (value > Minimum(Mother.Age, Father.Age)-12)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        "Это ж сколько лет было родителям ребенка??");
+                }
+
+                base.Age = value;
+            }
+        }
 
         /// <summary>
         /// Описание ребенка
@@ -49,7 +78,7 @@ namespace Library
             var newChild = new Child();
             Random random = new Random();
 
-            Person.GetRandomPerson(newChild, GenderType.No);
+            PersonBase.GetRandomPerson(newChild, GenderType.No);
 
             newChild.Mother = Adult.CreateRandomAdult(true, null, GenderType.F);
             newChild.Father = newChild.Mother.Partner;
@@ -75,7 +104,7 @@ namespace Library
 
             var path = System.IO.Path.Combine(Path, textFile);
 
-            newChild.Institution = Person.GetLine(path);
+            newChild.Institution = PersonBase.GetLine(path);
 
             return newChild;
         }

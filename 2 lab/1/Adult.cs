@@ -3,7 +3,10 @@ using System.Threading;
 
 namespace Library
 {
-    public class Adult : Person
+    /// <summary>
+    /// Взрослый человек
+    /// </summary>
+    public class Adult : PersonBase
     {
         /// <summary>
         /// Партнер
@@ -32,6 +35,28 @@ namespace Library
                 }
             }
         }
+
+        /// <summary>
+        /// Возраст взрослого
+        /// </summary>
+        public override int Age
+        {
+            get
+            {
+                return base.Age;
+            }
+            set
+            {
+                if (value < 0 || value > 160)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        "Невозможный возраст человека");
+                }
+
+                base.Age = value;
+            }
+        }
+
 
         /// <summary>
         /// Номер паспорта
@@ -80,7 +105,7 @@ namespace Library
             Random random = new Random();
             Thread.Sleep(15);
 
-            Person.GetRandomPerson(newAdult, gender);
+            PersonBase.GetRandomPerson(newAdult, gender);
 
             int countStateOfMarriage = Enum.GetNames(typeof(StateOfMarriage)).Length;
 
@@ -110,7 +135,7 @@ namespace Library
             var Path = AppDomain.CurrentDomain.BaseDirectory
                 + "\\ParametrsPerson\\";
             var pathWorkPlace = System.IO.Path.Combine(Path, "WorkPlace.txt");
-            newAdult.WorkPlace = Person.GetLine(pathWorkPlace);
+            newAdult.WorkPlace = PersonBase.GetLine(pathWorkPlace);
 
             return newAdult;
         }
@@ -123,7 +148,7 @@ namespace Library
         {
             var iAm = base.IAm();
 
-            iAm += $"и я взрослый человек";
+            iAm += "и я взрослый человек";
 
             return iAm;
         }

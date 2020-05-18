@@ -49,7 +49,7 @@
     <Compile Include="Adult.cs" />
     <Compile Include="Child.cs" />
     <Compile Include="ParametrsPerson.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="PersonBase.cs" />
     <Compile Include="PersonList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateOfMarriage.cs" />
