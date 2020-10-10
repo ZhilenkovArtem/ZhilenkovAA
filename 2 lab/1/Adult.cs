@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 
 namespace Library
 {
@@ -8,6 +7,16 @@ namespace Library
     /// </summary>
     public class Adult : PersonBase
     {
+        /// <summary>
+        /// Минимальный возраст взрослого
+        /// </summary>
+        public const int MINAGE = 17;
+
+        /// <summary>
+        /// Максимальный возраст взрослого
+        /// </summary>
+        public const int MAXAGE = 100;
+
         /// <summary>
         /// Партнер
         /// </summary>
@@ -43,17 +52,17 @@ namespace Library
         {
             get
             {
-                return base.Age;
+                return _age;
             }
             set
             {
-                if (value < 0 || value > 160)
+                if (value < MINAGE || value > MAXAGE)
                 {
                     throw new ArgumentOutOfRangeException(
                         "Невозможный возраст человека");
                 }
 
-                base.Age = value;
+                _age = value;
             }
         }
 
@@ -93,64 +102,13 @@ namespace Library
         }
 
         /// <summary>
-        /// Создание взрослого человека
+        /// Взрослый вынужден заниматься спортом
         /// </summary>
-        /// <param name="marriage">женатость</param>
-        /// <param name="partner">партнер</param>
-        /// <param name="gender">пол</param>
-        /// <returns>взрослый человек</returns>
-        public static Adult CreateRandomAdult(bool marriage=false, Adult partner=null, GenderType gender = GenderType.No)
+        /// <returns>возвращаемая строка про взрослого</returns>
+        public string DoSport()
         {
-            var newAdult = new Adult();
-            Random random = new Random();
-            Thread.Sleep(15);
-
-            PersonBase.GetRandomPerson(newAdult, gender);
-
-            int countStateOfMarriage = Enum.GetNames(typeof(StateOfMarriage)).Length;
-
-            if (marriage == false)
-            {
-                newAdult.StateOfMarriage = (StateOfMarriage)random.Next(countStateOfMarriage);
-
-                if (newAdult.StateOfMarriage == StateOfMarriage.Married)
-                {
-                    newAdult.Partner = CreateRandomAdult(true, newAdult, newAdult.Gender);
-                }
-            }
-            else if (marriage == true && partner == null)
-            {
-                newAdult.Partner = CreateRandomAdult(true, newAdult, newAdult.Gender);
-            }
-            else
-            {
-                newAdult.Partner = partner;
-            }
-
-            newAdult.Age = random.Next(17, 100);
-
-            newAdult.PassportSeries = random.Next(0, 9999).ToString("D4");
-            newAdult.PassportNumber = random.Next(0, 999999).ToString("D6");
-
-            var Path = AppDomain.CurrentDomain.BaseDirectory
-                + "\\ParametrsPerson\\";
-            var pathWorkPlace = System.IO.Path.Combine(Path, "WorkPlace.txt");
-            newAdult.WorkPlace = PersonBase.GetLine(pathWorkPlace);
-
-            return newAdult;
-        }
-
-        /// <summary>
-        /// Проверка правильности (5.С задание)
-        /// </summary>
-        /// <returns>строка с каким-то текстом</returns>
-        public override string IAm()
-        {
-            var iAm = base.IAm();
-
-            iAm += "и я взрослый человек";
-
-            return iAm;
+            return $"{ShortDescriptionPerson()} " +
+                $"занимается спортом для поддержания формы";
         }
     }
 }

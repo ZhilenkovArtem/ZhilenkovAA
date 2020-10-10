@@ -8,6 +8,16 @@ namespace Library
     public class Child : PersonBase
     {
         /// <summary>
+        /// Минимальный возраст ребенка
+        /// </summary>
+        public const int MINAGE = 0;
+
+        /// <summary>
+        /// Максимальный возраст ребенка
+        /// </summary>
+        public const int MAXAGE = 17;
+
+        /// <summary>
         /// Отец
         /// </summary>
         public Adult Father { get; set; }
@@ -29,11 +39,11 @@ namespace Library
         {
             get
             {
-                return base.Age;
+                return _age;
             }
             set
             {
-                if (value < 0 || value > 17)
+                if (value < MINAGE || value > MAXAGE)
                 {
                     throw new ArgumentOutOfRangeException("Возраст ребенка" +
                         " должен лежать в диапазон от 0 до 17 лет");
@@ -44,7 +54,7 @@ namespace Library
                         "Это ж сколько лет было родителям ребенка??");
                 }
 
-                base.Age = value;
+                _age = value;
             }
         }
 
@@ -70,67 +80,24 @@ namespace Library
         }
 
         /// <summary>
-        /// Создание ребенка
-        /// </summary>
-        /// <returns>ребенок</returns>
-        public static Child CreateRandomChild()
-        {
-            var newChild = new Child();
-            Random random = new Random();
-
-            PersonBase.GetRandomPerson(newChild, GenderType.No);
-
-            newChild.Mother = Adult.CreateRandomAdult(true, null, GenderType.F);
-            newChild.Father = newChild.Mother.Partner;
-
-            var childMaximalAge = Minimum(18, Minimum(newChild.Mother.Age, 
-                newChild.Father.Age)-12);
-
-            newChild.Age = random.Next(0, childMaximalAge);
-
-            var Path = AppDomain.CurrentDomain.BaseDirectory
-                + "\\ParametrsPerson\\";
-
-            string textFile;
-
-            if (newChild.Age < 7)
-            {
-                textFile = "KinderGarden.txt";
-            }
-            else
-            {
-                textFile = "School.txt";
-            }
-
-            var path = System.IO.Path.Combine(Path, textFile);
-
-            newChild.Institution = PersonBase.GetLine(path);
-
-            return newChild;
-        }
-
-        /// <summary>
         /// Нахождение минимального числа из двух
         /// </summary>
         /// <param name="firstNumber">первое число</param>
         /// <param name="secondNumber">второе число</param>
         /// <returns>минимальное число</returns>
-        static int Minimum(int firstNumber, int secondNumber)
+        public static int Minimum(int firstNumber, int secondNumber)
         {
             return firstNumber > secondNumber ? secondNumber : firstNumber;
         }
 
         /// <summary>
-        /// Проверка правильности (5.С задание)
+        /// Ребенок от прирроды стройный
         /// </summary>
-        /// <returns>строка с каким-то текстом</returns>
-        public override string IAm()
+        /// <returns>возвращаемая строка про ребенка</returns>
+        public string DontSport()
         {
-            var iAm = base.IAm();
-
-            iAm += $"и я ребенок";
-
-            return iAm;
+            return $"{ShortDescriptionPerson()} " +
+                $"стройняжка от природы";
         }
     }
 }

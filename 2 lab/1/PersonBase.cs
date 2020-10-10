@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.IO;
 
 namespace Library
 {
@@ -23,7 +22,7 @@ namespace Library
         /// <summary>
         /// Возраст человека
         /// </summary>
-        private int _age;
+        protected int _age;
 
         /// <summary>
         /// Имя
@@ -56,116 +55,14 @@ namespace Library
         /// <summary>
         /// Возраст
         /// </summary>
-        public virtual int Age
-        {
-            set
-            {
-                if (value < 0)
-                {
-                    throw new FormatException("Такого не может быть");
-                }
-                if (value > 160)
-                {
-                    throw new FormatException("Серьёзно? Не верю! А ну ка, наберай заново");
-                }
-                _age = value;
-            }
-            get
-            {
-                return _age;
-            }
-        }
+        public abstract int Age { get;  set; }
+
         /// <summary>
         /// Пол
         /// </summary>
         public GenderType Gender { set; get; }
 
-        /// <summary>
-        /// Рандом
-        /// </summary>
-        private static Random _random = new Random();
-
-        /// <summary>
-        /// Создание рандомного человека
-        /// </summary>
-        /// <returns>рандомный человек</returns>
-        public static PersonBase CreateRandomPerson()
-        {
-            if (_random.Next(0, 2) == 0)
-            {
-                return Adult.CreateRandomAdult();
-            }
-            else
-            {
-                return Child.CreateRandomChild();
-            }
-        }
-
-        /// <summary>
-        /// Создание рандомного человека с базовыми параметрами
-        /// </summary>
-        /// <returns>рандомный человек</returns>
-        public static void GetRandomPerson(PersonBase randomPerson, GenderType gender = GenderType.No)
-        {
-            var Path = AppDomain.CurrentDomain.BaseDirectory 
-                + "\\ParametrsPerson\\";
-
-            var pathNameFemale = System.IO.Path.Combine(Path, "NameFemale.txt");
-            var pathNameMale = System.IO.Path.Combine(Path, "NameMale.txt");
-            var pathSurnameFemale = System.IO.Path.Combine(Path, "SurnameFemale.txt");
-            var pathSurnameMale = System.IO.Path.Combine(Path, "SurnameMale.txt");
-
-            switch (gender)
-            {
-                case GenderType.No:
-                    {
-                        int countGender = Enum.GetNames(typeof(GenderType)).Length;
-                        randomPerson.Gender = (GenderType)_random.Next(countGender - 1);
-                    }
-                break;
-                case GenderType.M:
-                    {
-                        randomPerson.Gender = GenderType.F;
-                    }
-                break;
-                case GenderType.F:
-                    {
-                        randomPerson.Gender = GenderType.M;
-                    }
-                break;
-            }
-
-            switch (randomPerson.Gender)
-            {
-                case GenderType.F:
-                {
-                    randomPerson.Name = GetLine(pathNameFemale);
-                    randomPerson.Surname = GetLine(pathSurnameFemale);
-                }
-                break;
-                case GenderType.M:
-                {
-                    randomPerson.Name = GetLine(pathNameMale);
-                    randomPerson.Surname = GetLine(pathSurnameMale);
-                }
-                break;
-            }
-        }
-
-        /// <summary>
-        /// Выбор строки из списка, к которому дан путь
-        /// </summary>
-        /// <param name="path">Путь к списку</param>
-        /// <returns>Строка списка</returns>
-        public static string GetLine(string path)
-        {
-            Random random = new Random();
-            string[] separator = new string[] { "\r\n" };
-            string[] temp = File.ReadAllText(path).Split(separator, StringSplitOptions.None);
-            var line = temp[random.Next(temp.Length)];
-
-            return line;
-        }
+        
 
         /// <summary>
         /// Определяет равны ли два человека
@@ -245,12 +142,21 @@ namespace Library
         }
 
         /// <summary>
-        /// Проверка правильности (5.С задание)
+        /// Сформировать короткую информацию о человеке
+        /// </summary>
+        /// <returns>Строка с информацией</returns>
+        public string ShortDescriptionPerson()
+        {
+            return $"{Name} {Surname}";
+        }
+
+        /// <summary>
+        /// Проверка правильности
         /// </summary>
         /// <returns>строка с каким-то текстом</returns>
-        public virtual string IAm()
+        public virtual string DefinitionPerson()
         {
-            return $"Меня зовут {Name} {Surname} ";
+            return $"Меня зовут {ShortDescriptionPerson()} ";
         }
     }
 }

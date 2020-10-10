@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using Library;
 
 namespace Testing
@@ -9,7 +8,6 @@ namespace Testing
     /// </summary>
     public class Test
     {
-        public static PersonList persons1 = new PersonList();
         /// <summary>
         /// Точка входа
         /// </summary>
@@ -20,15 +18,14 @@ namespace Testing
 
             for (int j = 0; j < 7; j++)
             {
-                people.AddPerson(PersonBase.CreateRandomPerson());
-                Thread.Sleep(15);
+                people.AddPerson(RandomPerson.CreateRandomPerson());
             }
 
             ShowList(people);
 
             Console.WriteLine("Определение типа 4-го элемента и выполнение " +
-                "какого-нибудь метода:\n");
-
+                "какого-нибудь метода:");
+            
             FourthPerson(people);
 
             Console.ReadKey();
@@ -67,7 +64,18 @@ namespace Testing
         {
             var fourthPerson = personList.GetPerson(3);
             
-            Console.WriteLine(fourthPerson.IAm());
+            if (fourthPerson is Adult)
+            {
+                Console.WriteLine("это взрослый человек");
+                var person = fourthPerson as Adult;
+                Console.WriteLine(person.DoSport());
+            }
+            else if (fourthPerson is Child)
+            {
+                Console.WriteLine("это ребенок");
+                var person = fourthPerson as Child;
+                Console.WriteLine(person.DontSport());
+            }
         }
     }
 }

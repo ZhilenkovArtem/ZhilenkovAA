@@ -5,8 +5,8 @@
     /// </summary>
     public enum GenderType
     {
-        M,
-        F,
-        No
+        Male,
+        Female,
+        NoGender
     }
 }
