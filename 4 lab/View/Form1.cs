@@ -42,7 +42,8 @@ namespace View
             if (addingEditionForm.ShowDialog() == DialogResult.OK)
             {
                 _editions.Add(addingEditionForm.EditionDone);
-                EditionDataView.CreateTable(_editions, EditionDescriptionGridView);
+                EditionDataView.CreateTable(
+                    _editions, EditionDescriptionGridView);
             }
         }
 
@@ -67,7 +68,8 @@ namespace View
 
             for (int i = 0; i < linesCount; i++)
             {
-                _editions.RemoveAt(EditionDescriptionGridView.SelectedRows[0].Index);
+                _editions.RemoveAt(
+                    EditionDescriptionGridView.SelectedRows[0].Index);
             }
         }
 
@@ -80,6 +82,16 @@ namespace View
         {
             var searchingForm = new SearchingForm(_editions);
             searchingForm.Show();
+        }
+
+        /// <summary>
+        /// Добавить рандомное издание
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RandomEdition_Click(object sender, EventArgs e)
+        {
+            _editions.Add(RandomEdition.GetRandomEdition());
         }
     }
 }

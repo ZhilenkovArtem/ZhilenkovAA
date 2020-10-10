@@ -9,8 +9,16 @@ using System.ComponentModel;
 
 namespace View
 {
+    /// <summary>
+    /// Описание вывода данных
+    /// </summary>
     public class EditionDataView
     {
+        /// <summary>
+        /// Создать таблицу
+        /// </summary>
+        /// <param name="editions">издания</param>
+        /// <param name="dataGridView">таблица</param>
         public static void CreateTable(BindingList<EditionBase> editions,
             DataGridView dataGridView)
         {

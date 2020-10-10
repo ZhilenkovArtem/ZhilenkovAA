@@ -46,7 +46,8 @@ namespace View
         /// <param name="e"></param>
         private void SearchingForm_Load(object sender, EventArgs e)
         {
-            EditionDataView.CreateTable(_searchedEditions, EditionDescriptionGridView);
+            EditionDataView.CreateTable(
+                _searchedEditions, EditionDescriptionGridView);
 
             SelectEdition.SelectedIndex = 0;
         }
@@ -77,14 +78,16 @@ namespace View
                     {
                         if (SelectEdition.SelectedIndex == 0)
                         {
-                            if (row.Title.ToLower().Contains(SearchingWordTextBox.Text.ToLower()))
+                            if (row.Title.ToLower().Contains(
+                                SearchingWordTextBox.Text.ToLower()))
                             {
                                 _searchedEditions.Add(row);
                             }
                         }
                         else if (SelectEdition.SelectedIndex == 1)
                         {
-                            if (row.City.ToLower().Contains(SearchingWordTextBox.Text.ToLower()))
+                            if (row.City.ToLower().Contains(
+                                SearchingWordTextBox.Text.ToLower()))
                             {
                                 _searchedEditions.Add(row);
                             }
@@ -101,7 +104,8 @@ namespace View
                             Regex regex = new Regex("[0-9]");
                             if (!regex.IsMatch(SearchingWordTextBox.Text))
                             {
-                                SearchingWordLabel.Text = "Вы должны ввести число";
+                                SearchingWordLabel.Text = 
+                                    "Вы должны ввести число";
                                 SearchingWordLabel.ForeColor = Color.Red;
                             }
                             else
@@ -109,7 +113,8 @@ namespace View
                                 SearchingWordLabel.Text = "Слово для поиска";
                                 SearchingWordLabel.ForeColor = Color.Black;
 
-                                if (row.Pages == int.Parse(SearchingWordTextBox.Text))
+                                if (row.Pages == int.Parse(
+                                    SearchingWordTextBox.Text))
                                 {
                                     _searchedEditions.Add(row);
                                 }
@@ -139,7 +144,8 @@ namespace View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectEdition_SelectedIndexChanged(object sender, EventArgs e)
+        private void SelectEdition_SelectedIndexChanged(
+            object sender, EventArgs e)
         {
             if (SelectEdition.SelectedIndex == 0 ||
                 SelectEdition.SelectedIndex == 1 ||

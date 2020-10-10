@@ -33,6 +33,7 @@
             this.AddEdition = new System.Windows.Forms.Button();
             this.RemoveEdition = new System.Windows.Forms.Button();
             this.Searching = new System.Windows.Forms.Button();
+            this.RandomEditionButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.EditionDescriptionGridView)).BeginInit();
             this.EditionDescriptionGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -89,11 +90,22 @@
             this.Searching.UseVisualStyleBackColor = true;
             this.Searching.Click += new System.EventHandler(this.Searching_Click);
             // 
+            // RandomEditionButton
+            // 
+            this.RandomEditionButton.Location = new System.Drawing.Point(318, 367);
+            this.RandomEditionButton.Name = "RandomEditionButton";
+            this.RandomEditionButton.Size = new System.Drawing.Size(102, 46);
+            this.RandomEditionButton.TabIndex = 5;
+            this.RandomEditionButton.Text = "Слуйчайное издание";
+            this.RandomEditionButton.UseVisualStyleBackColor = true;
+            this.RandomEditionButton.Click += new System.EventHandler(this.RandomEdition_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.RandomEditionButton);
             this.Controls.Add(this.Searching);
             this.Controls.Add(this.RemoveEdition);
             this.Controls.Add(this.AddEdition);
@@ -114,6 +126,7 @@
         private System.Windows.Forms.Button AddEdition;
         private System.Windows.Forms.Button RemoveEdition;
         private System.Windows.Forms.Button Searching;
+        private System.Windows.Forms.Button RandomEditionButton;
     }
 }
 
