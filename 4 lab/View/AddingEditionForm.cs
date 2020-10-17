@@ -21,10 +21,13 @@ namespace View
         /// </summary>
         private EditionBase _edition;
 
+        /// <summary>
+        /// Словарь
+        /// </summary>
+        /// <returns>словарь</returns>
         private Dictionary<TextBox, Tuple<string, string, Regex, Label>> GetDictionary()
         {
-            var textBoxValidationDictionary =
-            new Dictionary<TextBox, Tuple<string, string, Regex, Label>>()
+            return new Dictionary<TextBox, Tuple<string, string, Regex, Label>>()
             {
                 {
                     TitleTextBox,
@@ -83,7 +86,6 @@ namespace View
                         Publishing)
                 }
             };
-            return textBoxValidationDictionary;
         }
 
         /// <summary>
