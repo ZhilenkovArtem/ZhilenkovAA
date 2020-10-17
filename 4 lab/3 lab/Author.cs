@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ namespace _3_lab
     /// <summary>
     /// Автор
     /// </summary>
+    [Serializable]
     public class Author
     {
         #region Fields

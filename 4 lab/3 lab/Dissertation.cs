@@ -7,6 +7,7 @@ namespace _3_lab
     /// <summary>
     /// Диссертация
     /// </summary>
+    [Serializable]
     public class Dissertation : EditionBase
     {
         #region Fields

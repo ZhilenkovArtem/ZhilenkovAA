@@ -22,25 +22,22 @@ namespace View
         public static void CreateTable(BindingList<EditionBase> editions,
             DataGridView dataGridView)
         {
-            dataGridView.DataSource = editions;
+            BindingList<DescriptionItem> editionDescription = new BindingList<DescriptionItem>();
+            foreach (var edition in editions)
+            {
+                var description = new DescriptionItem(edition.DescriptionEdition());
+                editionDescription.Add(description);
+            }
+            dataGridView.DataSource = editionDescription;
 
-            dataGridView.Columns[0].HeaderText = "Название";
-            dataGridView.Columns[1].HeaderText = "Город";
-            dataGridView.Columns[2].HeaderText = "Дата";
-            dataGridView.Columns[3].HeaderText = "Количество страниц";
-
-            dataGridView.AutoSizeColumnsMode =
-               DataGridViewAutoSizeColumnsMode.Fill;
-            
-            dataGridView.Columns[0].Width = 290;
-            dataGridView.Columns[1].Width = 115;
-            
-            dataGridView.DefaultCellStyle.Alignment =
-                DataGridViewContentAlignment.MiddleCenter;
-            
+            dataGridView.Columns[0].HeaderText = "Описание издания";
+            dataGridView.AutoResizeColumns();
+            if (dataGridView.Columns[0].Width < 547)
+            {
+                dataGridView.Columns[0].Width = 547;
+            }
             dataGridView.ColumnHeadersDefaultCellStyle.Alignment =
                 DataGridViewContentAlignment.MiddleCenter;
-            
             dataGridView.SelectionMode =
                 DataGridViewSelectionMode.FullRowSelect;
         }

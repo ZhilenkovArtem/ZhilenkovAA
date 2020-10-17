@@ -5,6 +5,7 @@ namespace _3_lab
     /// <summary>
     /// Журнал
     /// </summary>
+    [Serializable]
     public class Journal : EditionBase
     {
         /// <summary>

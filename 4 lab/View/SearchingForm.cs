@@ -1,12 +1,7 @@
 ﻿using _3_lab;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
@@ -31,6 +26,7 @@ namespace View
             InitializeComponent();
 
             _editions = editions;
+            SelectEdition.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         /// <summary>
@@ -38,7 +34,7 @@ namespace View
         /// </summary>
         private BindingList<EditionBase> _searchedEditions =
             new BindingList<EditionBase>();
-
+        
         /// <summary>
         /// События при загрузке формы
         /// </summary>
@@ -47,11 +43,11 @@ namespace View
         private void SearchingForm_Load(object sender, EventArgs e)
         {
             EditionDataView.CreateTable(
-                _searchedEditions, EditionDescriptionGridView);
+                _searchedEditions, SearchedEditionGridView);
 
             SelectEdition.SelectedIndex = 0;
         }
-
+        
         /// <summary>
         /// Поиск издания
         /// </summary>
@@ -61,50 +57,35 @@ namespace View
 
             try
             {
-                if (SelectEdition.SelectedIndex == 0 ||
-                    SelectEdition.SelectedIndex == 1 ||
-                    SelectEdition.SelectedIndex == 3 ||
-                    SearchingWordTextBox.Text == null)
+                foreach (var row in _editions)
                 {
-                    SearchingWordLabel.Text = "Строка пуста";
-                    SearchingWordLabel.ForeColor = Color.Red;
-                }
-                else
-                {
-                    SearchingWordLabel.Text = "Слово для поиска";
-                    SearchingWordLabel.ForeColor = Color.Black;
-
-                    foreach (var row in _editions)
+                    switch (SelectEdition.SelectedIndex)
                     {
-                        if (SelectEdition.SelectedIndex == 0)
-                        {
+                        case 0:
                             if (row.Title.ToLower().Contains(
-                                SearchingWordTextBox.Text.ToLower()))
+                            SearchingWordTextBox.Text.ToLower()))
                             {
                                 _searchedEditions.Add(row);
                             }
-                        }
-                        else if (SelectEdition.SelectedIndex == 1)
-                        {
+                        break;
+                        case 1:
                             if (row.City.ToLower().Contains(
-                                SearchingWordTextBox.Text.ToLower()))
+                            SearchingWordTextBox.Text.ToLower()))
                             {
                                 _searchedEditions.Add(row);
                             }
-                        }
-                        else if (SelectEdition.SelectedIndex == 2)
-                        {
-                            if (row.Date == DatePicker.Value.Date)
+                        break;
+                        case 2:
+                            if (row.Date.Year == DatePicker.Value.Date.Year)
                             {
                                 _searchedEditions.Add(row);
                             }
-                        }
-                        else if (SelectEdition.SelectedIndex == 3)
-                        {
+                        break;
+                        case 3:
                             Regex regex = new Regex("[0-9]");
                             if (!regex.IsMatch(SearchingWordTextBox.Text))
                             {
-                                SearchingWordLabel.Text = 
+                                SearchingWordLabel.Text =
                                     "Вы должны ввести число";
                                 SearchingWordLabel.ForeColor = Color.Red;
                             }
@@ -119,7 +100,7 @@ namespace View
                                     _searchedEditions.Add(row);
                                 }
                             }
-                        }
+                        break;
                     }
                 }
             }
@@ -137,6 +118,7 @@ namespace View
         private void SearchButton_Click(object sender, EventArgs e)
         {
             SearchEdition();
+            EditionDataView.CreateTable(_searchedEditions, SearchedEditionGridView);
         }
 
         /// <summary>
@@ -163,6 +145,11 @@ namespace View
                 SearchingWordTextBox.Enabled = false;
                 DatePicker.Enabled = true;
             }
+        }
+
+        private void Close_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

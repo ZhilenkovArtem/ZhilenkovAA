@@ -5,6 +5,7 @@ namespace _3_lab
     /// <summary>
     /// Сборник
     /// </summary>
+    [Serializable]
     public class CollectedPaper : EditionBase
     {
         #region Fields

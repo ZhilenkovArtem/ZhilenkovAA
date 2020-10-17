@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.EditionDescriptionGroupBox = new System.Windows.Forms.GroupBox();
-            this.EditionDescriptionGridView = new System.Windows.Forms.DataGridView();
+            this.SearchedEditionGridView = new System.Windows.Forms.DataGridView();
             this.SelectEdition = new System.Windows.Forms.ComboBox();
             this.SearchingParamLabel = new System.Windows.Forms.Label();
             this.SearchingWordTextBox = new System.Windows.Forms.TextBox();
@@ -37,13 +37,14 @@
             this.SearchButton = new System.Windows.Forms.Button();
             this.DatePicker = new System.Windows.Forms.DateTimePicker();
             this.DateSearchingLabel = new System.Windows.Forms.Label();
+            this.Close = new System.Windows.Forms.Button();
             this.EditionDescriptionGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EditionDescriptionGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchedEditionGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // EditionDescriptionGroupBox
             // 
-            this.EditionDescriptionGroupBox.Controls.Add(this.EditionDescriptionGridView);
+            this.EditionDescriptionGroupBox.Controls.Add(this.SearchedEditionGridView);
             this.EditionDescriptionGroupBox.Location = new System.Drawing.Point(27, 22);
             this.EditionDescriptionGroupBox.Name = "EditionDescriptionGroupBox";
             this.EditionDescriptionGroupBox.Size = new System.Drawing.Size(745, 320);
@@ -51,17 +52,17 @@
             this.EditionDescriptionGroupBox.TabStop = false;
             this.EditionDescriptionGroupBox.Text = "Описание изданий";
             // 
-            // EditionDescriptionGridView
+            // SearchedEditionGridView
             // 
-            this.EditionDescriptionGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.EditionDescriptionGridView.Location = new System.Drawing.Point(6, 21);
-            this.EditionDescriptionGridView.Name = "EditionDescriptionGridView";
-            this.EditionDescriptionGridView.ReadOnly = true;
-            this.EditionDescriptionGridView.RowHeadersVisible = false;
-            this.EditionDescriptionGridView.RowHeadersWidth = 51;
-            this.EditionDescriptionGridView.RowTemplate.Height = 24;
-            this.EditionDescriptionGridView.Size = new System.Drawing.Size(733, 293);
-            this.EditionDescriptionGridView.TabIndex = 0;
+            this.SearchedEditionGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SearchedEditionGridView.Location = new System.Drawing.Point(6, 21);
+            this.SearchedEditionGridView.Name = "SearchedEditionGridView";
+            this.SearchedEditionGridView.ReadOnly = true;
+            this.SearchedEditionGridView.RowHeadersVisible = false;
+            this.SearchedEditionGridView.RowHeadersWidth = 51;
+            this.SearchedEditionGridView.RowTemplate.Height = 24;
+            this.SearchedEditionGridView.Size = new System.Drawing.Size(733, 293);
+            this.SearchedEditionGridView.TabIndex = 0;
             // 
             // SelectEdition
             // 
@@ -71,7 +72,7 @@
             "Город",
             "Дата",
             "Количество страниц"});
-            this.SelectEdition.Location = new System.Drawing.Point(33, 377);
+            this.SelectEdition.Location = new System.Drawing.Point(33, 374);
             this.SelectEdition.Name = "SelectEdition";
             this.SelectEdition.Size = new System.Drawing.Size(195, 24);
             this.SelectEdition.TabIndex = 3;
@@ -80,7 +81,7 @@
             // SearchingParamLabel
             // 
             this.SearchingParamLabel.AutoSize = true;
-            this.SearchingParamLabel.Location = new System.Drawing.Point(30, 357);
+            this.SearchingParamLabel.Location = new System.Drawing.Point(30, 354);
             this.SearchingParamLabel.Name = "SearchingParamLabel";
             this.SearchingParamLabel.Size = new System.Drawing.Size(124, 17);
             this.SearchingParamLabel.TabIndex = 4;
@@ -88,7 +89,7 @@
             // 
             // SearchingWordTextBox
             // 
-            this.SearchingWordTextBox.Location = new System.Drawing.Point(251, 377);
+            this.SearchingWordTextBox.Location = new System.Drawing.Point(251, 374);
             this.SearchingWordTextBox.Name = "SearchingWordTextBox";
             this.SearchingWordTextBox.Size = new System.Drawing.Size(199, 22);
             this.SearchingWordTextBox.TabIndex = 5;
@@ -96,7 +97,7 @@
             // SearchingWordLabel
             // 
             this.SearchingWordLabel.AutoSize = true;
-            this.SearchingWordLabel.Location = new System.Drawing.Point(248, 357);
+            this.SearchingWordLabel.Location = new System.Drawing.Point(248, 354);
             this.SearchingWordLabel.Name = "SearchingWordLabel";
             this.SearchingWordLabel.Size = new System.Drawing.Size(126, 17);
             this.SearchingWordLabel.TabIndex = 6;
@@ -104,7 +105,7 @@
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(687, 371);
+            this.SearchButton.Location = new System.Drawing.Point(687, 362);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(79, 35);
             this.SearchButton.TabIndex = 7;
@@ -114,7 +115,7 @@
             // 
             // DatePicker
             // 
-            this.DatePicker.Location = new System.Drawing.Point(474, 375);
+            this.DatePicker.Location = new System.Drawing.Point(474, 372);
             this.DatePicker.MaxDate = new System.DateTime(2020, 10, 10, 0, 0, 0, 0);
             this.DatePicker.Name = "DatePicker";
             this.DatePicker.Size = new System.Drawing.Size(186, 22);
@@ -124,17 +125,28 @@
             // DateSearchingLabel
             // 
             this.DateSearchingLabel.AutoSize = true;
-            this.DateSearchingLabel.Location = new System.Drawing.Point(471, 355);
+            this.DateSearchingLabel.Location = new System.Drawing.Point(471, 352);
             this.DateSearchingLabel.Name = "DateSearchingLabel";
             this.DateSearchingLabel.Size = new System.Drawing.Size(120, 17);
             this.DateSearchingLabel.TabIndex = 9;
             this.DateSearchingLabel.Text = "Дата для поиска";
+            // 
+            // Close
+            // 
+            this.Close.Location = new System.Drawing.Point(687, 405);
+            this.Close.Name = "Close";
+            this.Close.Size = new System.Drawing.Size(79, 33);
+            this.Close.TabIndex = 10;
+            this.Close.Text = "Закрыть";
+            this.Close.UseVisualStyleBackColor = true;
+            this.Close.Click += new System.EventHandler(this.Close_Click);
             // 
             // SearchingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Close);
             this.Controls.Add(this.DateSearchingLabel);
             this.Controls.Add(this.DatePicker);
             this.Controls.Add(this.SearchButton);
@@ -143,11 +155,13 @@
             this.Controls.Add(this.SearchingParamLabel);
             this.Controls.Add(this.SelectEdition);
             this.Controls.Add(this.EditionDescriptionGroupBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "SearchingForm";
             this.Text = "Поиск издания";
             this.Load += new System.EventHandler(this.SearchingForm_Load);
             this.EditionDescriptionGroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.EditionDescriptionGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchedEditionGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,7 +170,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox EditionDescriptionGroupBox;
-        private System.Windows.Forms.DataGridView EditionDescriptionGridView;
+        private System.Windows.Forms.DataGridView SearchedEditionGridView;
         private System.Windows.Forms.ComboBox SelectEdition;
         private System.Windows.Forms.Label SearchingParamLabel;
         private System.Windows.Forms.TextBox SearchingWordTextBox;
@@ -164,5 +178,6 @@
         private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.DateTimePicker DatePicker;
         private System.Windows.Forms.Label DateSearchingLabel;
+        private System.Windows.Forms.Button Close;
     }
 }

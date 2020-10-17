@@ -8,6 +8,7 @@ namespace _3_lab
     /// <summary>
     /// Издание
     /// </summary>
+    [Serializable]
     public abstract class EditionBase : IEdition
     {
         #region Fields

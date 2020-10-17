@@ -7,6 +7,7 @@ namespace Library
     /// <summary>
     /// Книга
     /// </summary>
+    [Serializable]
     public class Book : EditionBase
     {
         #region Fields
