@@ -23,6 +23,8 @@ namespace View
 
         private Dictionary<TextBox, Tuple<string, string, Regex, Label>> GetDictionary()
         {
+            //TOOD: Убрать дубли
+            var surnameNameRegex = new Regex("([А-Я]|[а-я]|[A-Z]|[a-z])");
             var textBoxValidationDictionary =
             new Dictionary<TextBox, Tuple<string, string, Regex, Label>>()
             {
@@ -31,7 +33,7 @@ namespace View
                     new Tuple<string, string, Regex, Label>(
                         "Название содержит только буквы",
                         "Название",
-                        new Regex("([А-Я]|[а-я]|[A-Z]|[a-z])"),
+                        surnameNameRegex,
                         TitleLabel)
                 },
                 {
@@ -99,13 +101,7 @@ namespace View
         /// <summary>
         /// Вернуть издание
         /// </summary>
-        public EditionBase EditionDone
-        {
-            get
-            {
-                return _edition;
-            }
-        }
+        public EditionBase EditionDone => _edition;
 
         /// <summary>
         /// События при загрузке формы
@@ -139,27 +135,28 @@ namespace View
                 _edition.Date = DatePicker.Value.Date;
                 _edition.Pages = int.Parse(PagesTextBox.Text);
 
-                if (_edition is Book book)
+                switch (_edition)
                 {
-                    book.Publishing = PublishingTextBox.Text;
-                    book.Authors = addingAuthors1.SelectAuthors();
-                }
-                else if (_edition is CollectedPaper paper)
-                {
-                    paper.Publishing = PublishingTextBox.Text;
-                    paper.University = UniversityTextBox.Text;
-                }
-                else if (_edition is Dissertation dissertation)
-                {
-                    dissertation.University = UniversityTextBox.Text;
-                    dissertation.SpecialityCode = SpecialityCodeTextBox.Text;
-                    dissertation.Speciality = SpecialityTextBox.Text;
-                    var authors = new List<Author>(addingAuthors1.SelectAuthors());
-                    dissertation.Authors = authors;
-                }
-                else if (_edition is Journal journal)
-                {
-                    journal.Publishing = PublishingTextBox.Text;
+                    case Book book:
+                        book.Publishing = PublishingTextBox.Text;
+                        book.Authors = addingAuthors1.SelectAuthors();
+                        break;
+                    case CollectedPaper paper:
+                        paper.Publishing = PublishingTextBox.Text;
+                        paper.University = UniversityTextBox.Text;
+                        break;
+                    case Dissertation dissertation:
+                    {
+                        dissertation.University = UniversityTextBox.Text;
+                        dissertation.SpecialityCode = SpecialityCodeTextBox.Text;
+                        dissertation.Speciality = SpecialityTextBox.Text;
+                        var authors = new List<Author>(addingAuthors1.SelectAuthors());
+                        dissertation.Authors = authors;
+                        break;
+                    }
+                    case Journal journal:
+                        journal.Publishing = PublishingTextBox.Text;
+                        break;
                 }
 
                 _isCorrect = true;
@@ -191,11 +188,15 @@ namespace View
             switch (SelectEdition.SelectedIndex)
             {
                 case 0:
-                    DoVisibleField(true, false, false, false, true, true,
-                    true, true, true, true);
+                {
+                    DoVisibleField(true, false, false, 
+                        false, true, true,
+                        true, true, true, true);
                     _edition = new Book();
-                break;
-                case 1:
+                    break;
+                }
+                    //TODO: Скобочки
+            case 1:
                     DoVisibleField(true, true, false, false, false, false,
                     false, false, false, false);
                     _edition = new CollectedPaper();
@@ -238,8 +239,8 @@ namespace View
             addingAuthors1.SelectAddAuthorButton.Enabled = addButtonFlag;
             addingAuthors1.SelectRemoveAuthorButton.Enabled = 
                 removeButtonFlag;
-            var listVisibleCount = addingAuthors1.SelectSurnameList.Where(
-                surnameTextBox => surnameTextBox.Visible == true).Count();
+            var listVisibleCount = addingAuthors1.SelectSurnameList
+                .Count(surnameTextBox => surnameTextBox.Visible);
             addingAuthors1.SelectSurnameList[0].Enabled = surnameFlag;
             addingAuthors1.SelectInitialsList[0].Enabled = initialsFlag;
             if (listVisibleCount > 1)
@@ -282,6 +283,7 @@ namespace View
 
             if (string.IsNullOrEmpty(textBox.Text))
             {
+                //TODO: Duplication
                 e.Cancel = true;
                 textBox.Focus();
                 tuple.Item4.Text = $"Значение '{tuple.Item2}' пусто";
@@ -289,6 +291,7 @@ namespace View
             }
             else if (!tuple.Item3.IsMatch(textBox.Text))
             {
+                //TODO: Duplication
                 e.Cancel = true;
                 textBox.Focus();
                 tuple.Item4.Text = tuple.Item1;
@@ -296,6 +299,7 @@ namespace View
             }
             else
             {
+                //TODO: Duplication
                 e.Cancel = false;
                 tuple.Item4.Text = tuple.Item1;
                 tuple.Item4.ForeColor = Color.Black;

@@ -192,6 +192,7 @@ namespace View
         {
             int n = 0;
             char[] alphabet = new char[32];
+            //TODO
             for (int i = 1040; i <= 1071; i++)
             {
                 alphabet[n] = Convert.ToChar(i);

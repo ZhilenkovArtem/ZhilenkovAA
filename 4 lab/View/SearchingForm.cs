@@ -61,9 +61,10 @@ namespace View
                 {
                     switch (SelectEdition.SelectedIndex)
                     {
+                        //TODO: Скобочки
                         case 0:
-                            if (row.Title.ToLower().Contains(
-                            SearchingWordTextBox.Text.ToLower()))
+                            if (row.Title.ToLower()
+                                .Contains(SearchingWordTextBox.Text.ToLower()))
                             {
                                 _searchedEditions.Add(row);
                             }

@@ -48,6 +48,7 @@ namespace View
                 InitialsTextBox4
             });
 
+            //TODO: почему 1 и 4?
             for (int i = 1; i < 4; i++)
             {
                 _surnameList[i].Visible = false;
@@ -62,7 +63,8 @@ namespace View
         /// <param name="e"></param>
         private void AddAuthor_Click(object sender, EventArgs e)
         {
-            var listVisibleCount = _surnameList.Where(surnameTextBox => surnameTextBox.Visible == true).Count();
+            var listVisibleCount = _surnameList.Count(surnameTextBox => surnameTextBox.Visible);
+            //TODO: В константу
             if (listVisibleCount < 4)
             {
                 _surnameList[listVisibleCount].Visible = true;
@@ -77,7 +79,7 @@ namespace View
         /// <param name="e"></param>
         private void RemoveAuthor_Click(object sender, EventArgs e)
         {
-            var listVisibleCount = _surnameList.Where(surnameTextBox => surnameTextBox.Visible == true).Count();
+            var listVisibleCount = _surnameList.Count(surnameTextBox => surnameTextBox.Visible);
             if (listVisibleCount > 1)
             {
                 _surnameList[listVisibleCount-1].Visible = false;
@@ -92,8 +94,8 @@ namespace View
         public List<Author> SelectAuthors()
         {
             var authors = new List<Author>();
-            var listVisibleCount = _surnameList.Where(surnameTextBox => 
-            surnameTextBox.Visible == true && surnameTextBox.Enabled == true).Count();
+            var listVisibleCount = _surnameList.Count(surnameTextBox => surnameTextBox.Visible
+                                                                        && surnameTextBox.Enabled);
 
             for (int i = 0; i < listVisibleCount; i++)
             {
@@ -105,46 +107,22 @@ namespace View
         /// <summary>
         /// Вернуть список textBox-фамилий
         /// </summary>
-        public List<TextBox> SelectSurnameList
-        {
-            get
-            {
-                return _surnameList;
-            }
-        }
+        public List<TextBox> SelectSurnameList => _surnameList;
 
         /// <summary>
         /// Вернуть список textBox-инициалов
         /// </summary>
-        public List<TextBox> SelectInitialsList
-        {
-            get
-            {
-                return _initialsList;
-            }
-        }
+        public List<TextBox> SelectInitialsList => _initialsList;
 
         /// <summary>
         /// Вернуть кнопку добавления автора
         /// </summary>
-        public Button SelectAddAuthorButton
-        {
-            get
-            {
-                return AddAuthor;
-            }
-        }
+        public Button SelectAddAuthorButton => AddAuthor;
 
         /// <summary>
         /// Вернуть кнопку удаления автора
         /// </summary>
-        public Button SelectRemoveAuthorButton
-        {
-            get
-            {
-                return RemoveAuthor;
-            }
-        }
+        public Button SelectRemoveAuthorButton => RemoveAuthor;
 
         /// <summary>
         /// Валидация фамилии
@@ -153,7 +131,7 @@ namespace View
         /// <param name="e"></param>
         public void SurnameTextBoxValidating(object textBox, CancelEventArgs e)
         {
-            Regex regex = new Regex("([А-Я]|[а-я]|[A-Z]|[a-z])");
+            var regex = new Regex("([А-Я]|[а-я]|[A-Z]|[a-z])");
 
             TextBoxValidating(regex, (TextBox)textBox, $"Значение 'Фамилия' пусто", 
                 "Фамилия содержит только буквы", e);
@@ -166,7 +144,7 @@ namespace View
         /// <param name="e"></param>
         public void InitialsTextBoxValidating(object textBox, CancelEventArgs e)
         {
-            Regex regex = new Regex("(([А-Я]|[а-я]|[A-Z]|[a-z])[.]){2}");
+            var regex = new Regex("(([А-Я]|[а-я]|[A-Z]|[a-z])[.]){2}");
 
             TextBoxValidating(regex, (TextBox)textBox, $"Значение 'Инициалы' пусто", 
                 "Инициалы имеют формат А.А.", e);
@@ -186,22 +164,25 @@ namespace View
         {
             if (string.IsNullOrEmpty(textBox.Text))
             {
-                e.Cancel = true;
                 textBox.Focus();
+                //TODO: Duplication
+                e.Cancel = true;
                 SurnameLabel.Text = stringForEmpty;
                 SurnameLabel.ForeColor = Color.Red;
                 InitialsLabel.Visible = false;
             }
             else if (!regex.IsMatch(textBox.Text))
             {
-                e.Cancel = true;
                 textBox.Focus();
+                //TODO: Duplication
+                e.Cancel = true;
                 SurnameLabel.Text = stringForUncorrect;
                 SurnameLabel.ForeColor = Color.Red;
                 InitialsLabel.Visible = false;
             }
             else
             {
+                //TODO: Duplication
                 e.Cancel = false;
                 SurnameLabel.Text = "Фамилия";
                 SurnameLabel.ForeColor = Color.Black;
