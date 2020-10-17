@@ -62,45 +62,39 @@ namespace View
                     switch (SelectEdition.SelectedIndex)
                     {
                         case 0:
-                            if (row.Title.ToLower().Contains(
-                            SearchingWordTextBox.Text.ToLower()))
                             {
-                                _searchedEditions.Add(row);
-                            }
-                        break;
-                        case 1:
-                            if (row.City.ToLower().Contains(
-                            SearchingWordTextBox.Text.ToLower()))
-                            {
-                                _searchedEditions.Add(row);
-                            }
-                        break;
-                        case 2:
-                            if (row.Date.Year == DatePicker.Value.Date.Year)
-                            {
-                                _searchedEditions.Add(row);
-                            }
-                        break;
-                        case 3:
-                            Regex regex = new Regex("[0-9]");
-                            if (!regex.IsMatch(SearchingWordTextBox.Text))
-                            {
-                                SearchingWordLabel.Text =
-                                    "Вы должны ввести число";
-                                SearchingWordLabel.ForeColor = Color.Red;
-                            }
-                            else
-                            {
-                                SearchingWordLabel.Text = "Слово для поиска";
-                                SearchingWordLabel.ForeColor = Color.Black;
-
-                                if (row.Pages == int.Parse(
-                                    SearchingWordTextBox.Text))
+                                if (row.Title.ToLower()
+                                    .Contains(SearchingWordTextBox.Text.ToLower()))
                                 {
                                     _searchedEditions.Add(row);
                                 }
+                                break;
                             }
-                        break;
+                        case 1:
+                            {
+                                if (row.City.ToLower().Contains(
+                                SearchingWordTextBox.Text.ToLower()))
+                                {
+                                    _searchedEditions.Add(row);
+                                }
+                                break;
+                            }
+                        case 2:
+                            {
+                                if (CheckingByNumber(row.Date.Year))
+                                {
+                                    _searchedEditions.Add(row);
+                                }
+                                break;
+                            }
+                        case 3:
+                            {
+                                if (CheckingByNumber(row.Pages))
+                                {
+                                    _searchedEditions.Add(row);
+                                }
+                                break;
+                            }
                     }
                 }
             }
@@ -108,6 +102,35 @@ namespace View
             {
                 MessageBox.Show($"{exception.Message}");
             }
+        }
+
+        /// <summary>
+        /// Проверка строки с числом на соответствие элементу коллекции
+        /// </summary>
+        /// <param name="parametr">сравниваемый парметр</param>
+        /// <returns>метка правильности</returns>
+        private bool CheckingByNumber(int parametr)
+        {
+            bool isRight = false;
+            Regex regex = new Regex("[0-9]");
+            if (!regex.IsMatch(SearchingWordTextBox.Text))
+            {
+                SearchingWordLabel.Text =
+                    "Вы должны ввести число";
+                SearchingWordLabel.ForeColor = Color.Red;
+            }
+            else
+            {
+                SearchingWordLabel.Text = "Поле для поиска";
+                SearchingWordLabel.ForeColor = Color.Black;
+
+                if (parametr == int.Parse(
+                    SearchingWordTextBox.Text))
+                {
+                    isRight = true;
+                }
+            }
+            return isRight;
         }
 
         /// <summary>
@@ -129,22 +152,8 @@ namespace View
         private void SelectEdition_SelectedIndexChanged(
             object sender, EventArgs e)
         {
-            if (SelectEdition.SelectedIndex == 0 ||
-                SelectEdition.SelectedIndex == 1 ||
-                SelectEdition.SelectedIndex == 3)
-            {
-                SearchingWordLabel.Text = "Слово для поиска";
-                SearchingWordLabel.ForeColor = Color.Black;
-                SearchingWordTextBox.Enabled = true;
-                DatePicker.Enabled = false;
-            }
-            else if (SelectEdition.SelectedIndex == 2)
-            {
-                SearchingWordLabel.Text = "Слово для поиска";
-                SearchingWordLabel.ForeColor = Color.Black;
-                SearchingWordTextBox.Enabled = false;
-                DatePicker.Enabled = true;
-            }
+            SearchingWordLabel.Text = "Слово для поиска";
+            SearchingWordLabel.ForeColor = Color.Black;
         }
 
         private void Close_Click(object sender, EventArgs e)

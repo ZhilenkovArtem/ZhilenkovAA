@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using _3_lab;
@@ -15,6 +14,9 @@ namespace View
     /// </summary>
     public partial class AddingAuthors : UserControl
     {
+        private const int SecondSurnameIndex = 1;
+        private const int MaxIndex = 4;
+
         /// <summary>
         /// Лист фамилий
         /// </summary>
@@ -48,7 +50,7 @@ namespace View
                 InitialsTextBox4
             });
 
-            for (int i = 1; i < 4; i++)
+            for (int i = SecondSurnameIndex; i < MaxIndex; i++)
             {
                 _surnameList[i].Visible = false;
                 _initialsList[i].Visible = false;
@@ -62,8 +64,8 @@ namespace View
         /// <param name="e"></param>
         private void AddAuthor_Click(object sender, EventArgs e)
         {
-            var listVisibleCount = _surnameList.Where(surnameTextBox => surnameTextBox.Visible == true).Count();
-            if (listVisibleCount < 4)
+            var listVisibleCount = _surnameList.Count(surnameTextBox => surnameTextBox.Visible);
+            if (listVisibleCount < MaxIndex)
             {
                 _surnameList[listVisibleCount].Visible = true;
                 _initialsList[listVisibleCount].Visible = true;
@@ -77,8 +79,8 @@ namespace View
         /// <param name="e"></param>
         private void RemoveAuthor_Click(object sender, EventArgs e)
         {
-            var listVisibleCount = _surnameList.Where(surnameTextBox => surnameTextBox.Visible == true).Count();
-            if (listVisibleCount > 1)
+            var listVisibleCount = _surnameList.Count(surnameTextBox => surnameTextBox.Visible);
+            if (listVisibleCount > SecondSurnameIndex)
             {
                 _surnameList[listVisibleCount-1].Visible = false;
                 _initialsList[listVisibleCount-1].Visible = false;
@@ -92,9 +94,8 @@ namespace View
         public List<Author> SelectAuthors()
         {
             var authors = new List<Author>();
-            var listVisibleCount = _surnameList.Where(surnameTextBox => 
-            surnameTextBox.Visible == true && surnameTextBox.Enabled == true).Count();
-
+            var listVisibleCount = _surnameList.Count(surnameTextBox => surnameTextBox.Visible
+                                                                        && surnameTextBox.Enabled);
             for (int i = 0; i < listVisibleCount; i++)
             {
                 authors.Add(new Author(_surnameList[i].Text, _initialsList[i].Text));
@@ -105,46 +106,22 @@ namespace View
         /// <summary>
         /// Вернуть список textBox-фамилий
         /// </summary>
-        public List<TextBox> SelectSurnameList
-        {
-            get
-            {
-                return _surnameList;
-            }
-        }
+        public List<TextBox> SelectSurnameList => _surnameList;
 
         /// <summary>
         /// Вернуть список textBox-инициалов
         /// </summary>
-        public List<TextBox> SelectInitialsList
-        {
-            get
-            {
-                return _initialsList;
-            }
-        }
+        public List<TextBox> SelectInitialsList => _initialsList;
 
         /// <summary>
         /// Вернуть кнопку добавления автора
         /// </summary>
-        public Button SelectAddAuthorButton
-        {
-            get
-            {
-                return AddAuthor;
-            }
-        }
+        public Button SelectAddAuthorButton => AddAuthor;
 
         /// <summary>
         /// Вернуть кнопку удаления автора
         /// </summary>
-        public Button SelectRemoveAuthorButton
-        {
-            get
-            {
-                return RemoveAuthor;
-            }
-        }
+        public Button SelectRemoveAuthorButton => RemoveAuthor;
 
         /// <summary>
         /// Валидация фамилии
@@ -153,7 +130,7 @@ namespace View
         /// <param name="e"></param>
         public void SurnameTextBoxValidating(object textBox, CancelEventArgs e)
         {
-            Regex regex = new Regex("([А-Я]|[а-я]|[A-Z]|[a-z])");
+            var regex = new Regex("([А-Я]|[а-я]|[A-Z]|[a-z])");
 
             TextBoxValidating(regex, (TextBox)textBox, $"Значение 'Фамилия' пусто", 
                 "Фамилия содержит только буквы", e);
@@ -166,7 +143,7 @@ namespace View
         /// <param name="e"></param>
         public void InitialsTextBoxValidating(object textBox, CancelEventArgs e)
         {
-            Regex regex = new Regex("(([А-Я]|[а-я]|[A-Z]|[a-z])[.]){2}");
+            var regex = new Regex("(([А-Я]|[а-я]|[A-Z]|[a-z])[.]){2}");
 
             TextBoxValidating(regex, (TextBox)textBox, $"Значение 'Инициалы' пусто", 
                 "Инициалы имеют формат А.А.", e);
@@ -186,27 +163,36 @@ namespace View
         {
             if (string.IsNullOrEmpty(textBox.Text))
             {
-                e.Cancel = true;
                 textBox.Focus();
-                SurnameLabel.Text = stringForEmpty;
-                SurnameLabel.ForeColor = Color.Red;
-                InitialsLabel.Visible = false;
+                ChangingFormsElements(e, true, stringForEmpty, 
+                    Color.Red, false);
             }
             else if (!regex.IsMatch(textBox.Text))
             {
-                e.Cancel = true;
                 textBox.Focus();
-                SurnameLabel.Text = stringForUncorrect;
-                SurnameLabel.ForeColor = Color.Red;
-                InitialsLabel.Visible = false;
+                ChangingFormsElements(e, true, stringForUncorrect, 
+                    Color.Red, false);
             }
             else
             {
-                e.Cancel = false;
-                SurnameLabel.Text = "Фамилия";
-                SurnameLabel.ForeColor = Color.Black;
-                InitialsLabel.Visible = true;
+                ChangingFormsElements(e, false, "Фамилия", Color.Black, true);
             }
+        }
+
+        /// <summary>
+        /// События изменения элементов формы
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="mark">метка</param>
+        /// <param name="text">строка</param>
+        /// <param name="color">цвет label'а</param>
+        private void ChangingFormsElements(CancelEventArgs e, bool mark1,
+            string text, Color color, bool mark2)
+        {
+            e.Cancel = mark1;
+            SurnameLabel.Text = text;
+            SurnameLabel.ForeColor = color;
+            InitialsLabel.Visible = mark2;
         }
     }
 }

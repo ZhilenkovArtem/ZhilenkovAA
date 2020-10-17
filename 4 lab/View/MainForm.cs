@@ -38,13 +38,12 @@ namespace View
         {
             var addingEditionForm = new AddingEditionForm();
 
-            if (addingEditionForm.ShowDialog() == DialogResult.OK)
-            {
-                _editions.Add(addingEditionForm.EditionDone);
+            if (addingEditionForm.ShowDialog() != DialogResult.OK) return;
 
-                EditionDataView.CreateTable(
-                    _editions, EditionDescriptionGridView);
-            }
+            _editions.Add(addingEditionForm.EditionDone);
+
+            EditionDataView.CreateTable(
+                _editions, EditionDescriptionGridView);
         }
 
         /// <summary>
@@ -109,18 +108,16 @@ namespace View
                 saveFileDialog.FilterIndex = 1;
                 saveFileDialog.RestoreDirectory = true;
 
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                var binaryFormatter = new BinaryFormatter();
+                var filePath = saveFileDialog.FileName;
+
+                using (var fileStream = new FileStream(filePath,
+                    FileMode.OpenOrCreate))
                 {
-                    var binaryFormatter = new BinaryFormatter();
-                    var filePath = saveFileDialog.FileName;
-
-                    using (var fileStream = new FileStream(filePath,
-                        FileMode.OpenOrCreate))
-                    {
-                        binaryFormatter.Serialize(fileStream, _editions);
-                        MessageBox.Show("Файл сохранен!");
-                    }
-
+                    binaryFormatter.Serialize(fileStream, _editions);
+                    MessageBox.Show("Файл сохранен!");
                 }
             }
         }
@@ -138,30 +135,29 @@ namespace View
                 openFileDialog.FilterIndex = 1;
                 openFileDialog.RestoreDirectory = true;
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                var binaryFormatter = new BinaryFormatter();
+                var filePath = openFileDialog.FileName;
+
+                try
                 {
-                    var binaryFormatter = new BinaryFormatter();
-                    var filePath = openFileDialog.FileName;
-
-                    try
-                    {
-                        using (var fileStream = new FileStream(filePath,
+                    using (var fileStream = new FileStream(filePath,
                         FileMode.OpenOrCreate))
-                        {
-                            var newEditions = (BindingList<EditionBase>)binaryFormatter.
-                                Deserialize(fileStream);
-
-                            foreach (var edition in newEditions)
-                            {
-                                _editions.Add(edition);
-                            }
-                        }
-                        EditionDataView.CreateTable(_editions, EditionDescriptionGridView);
-                    }
-                    catch
                     {
-                        MessageBox.Show("Невозможно загрузить файл");
+                        var newEditions = (BindingList<EditionBase>)binaryFormatter.
+                            Deserialize(fileStream);
+
+                        foreach (var edition in newEditions)
+                        {
+                            _editions.Add(edition);
+                        }
                     }
+                    EditionDataView.CreateTable(_editions, EditionDescriptionGridView);
+                }
+                catch
+                {
+                    MessageBox.Show("Невозможно загрузить файл");
                 }
             }
         }

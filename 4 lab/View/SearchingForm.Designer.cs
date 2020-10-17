@@ -35,8 +35,6 @@
             this.SearchingWordTextBox = new System.Windows.Forms.TextBox();
             this.SearchingWordLabel = new System.Windows.Forms.Label();
             this.SearchButton = new System.Windows.Forms.Button();
-            this.DatePicker = new System.Windows.Forms.DateTimePicker();
-            this.DateSearchingLabel = new System.Windows.Forms.Label();
             this.Close = new System.Windows.Forms.Button();
             this.EditionDescriptionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SearchedEditionGridView)).BeginInit();
@@ -70,7 +68,7 @@
             this.SelectEdition.Items.AddRange(new object[] {
             "Название",
             "Город",
-            "Дата",
+            "Год выхода",
             "Количество страниц"});
             this.SelectEdition.Location = new System.Drawing.Point(33, 374);
             this.SelectEdition.Name = "SelectEdition";
@@ -89,7 +87,7 @@
             // 
             // SearchingWordTextBox
             // 
-            this.SearchingWordTextBox.Location = new System.Drawing.Point(251, 374);
+            this.SearchingWordTextBox.Location = new System.Drawing.Point(295, 374);
             this.SearchingWordTextBox.Name = "SearchingWordTextBox";
             this.SearchingWordTextBox.Size = new System.Drawing.Size(199, 22);
             this.SearchingWordTextBox.TabIndex = 5;
@@ -97,7 +95,7 @@
             // SearchingWordLabel
             // 
             this.SearchingWordLabel.AutoSize = true;
-            this.SearchingWordLabel.Location = new System.Drawing.Point(248, 354);
+            this.SearchingWordLabel.Location = new System.Drawing.Point(292, 354);
             this.SearchingWordLabel.Name = "SearchingWordLabel";
             this.SearchingWordLabel.Size = new System.Drawing.Size(126, 17);
             this.SearchingWordLabel.TabIndex = 6;
@@ -105,35 +103,17 @@
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(687, 362);
+            this.SearchButton.Location = new System.Drawing.Point(557, 374);
             this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(79, 35);
+            this.SearchButton.Size = new System.Drawing.Size(79, 33);
             this.SearchButton.TabIndex = 7;
             this.SearchButton.Text = "Поиск";
             this.SearchButton.UseVisualStyleBackColor = true;
             this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
             // 
-            // DatePicker
-            // 
-            this.DatePicker.Location = new System.Drawing.Point(474, 372);
-            this.DatePicker.MaxDate = new System.DateTime(2020, 10, 10, 0, 0, 0, 0);
-            this.DatePicker.Name = "DatePicker";
-            this.DatePicker.Size = new System.Drawing.Size(186, 22);
-            this.DatePicker.TabIndex = 8;
-            this.DatePicker.Value = new System.DateTime(2020, 10, 10, 0, 0, 0, 0);
-            // 
-            // DateSearchingLabel
-            // 
-            this.DateSearchingLabel.AutoSize = true;
-            this.DateSearchingLabel.Location = new System.Drawing.Point(471, 352);
-            this.DateSearchingLabel.Name = "DateSearchingLabel";
-            this.DateSearchingLabel.Size = new System.Drawing.Size(120, 17);
-            this.DateSearchingLabel.TabIndex = 9;
-            this.DateSearchingLabel.Text = "Дата для поиска";
-            // 
             // Close
             // 
-            this.Close.Location = new System.Drawing.Point(687, 405);
+            this.Close.Location = new System.Drawing.Point(687, 374);
             this.Close.Name = "Close";
             this.Close.Size = new System.Drawing.Size(79, 33);
             this.Close.TabIndex = 10;
@@ -147,8 +127,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.Close);
-            this.Controls.Add(this.DateSearchingLabel);
-            this.Controls.Add(this.DatePicker);
             this.Controls.Add(this.SearchButton);
             this.Controls.Add(this.SearchingWordLabel);
             this.Controls.Add(this.SearchingWordTextBox);
@@ -176,8 +154,6 @@
         private System.Windows.Forms.TextBox SearchingWordTextBox;
         private System.Windows.Forms.Label SearchingWordLabel;
         private System.Windows.Forms.Button SearchButton;
-        private System.Windows.Forms.DateTimePicker DatePicker;
-        private System.Windows.Forms.Label DateSearchingLabel;
         private System.Windows.Forms.Button Close;
     }
 }

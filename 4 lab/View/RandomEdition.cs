@@ -10,8 +10,21 @@ using System.Text.RegularExpressions;
 
 namespace View
 {
+    /// <summary>
+    /// Случайное издание
+    /// </summary>
     public static class RandomEdition
     {
+        /// <summary>
+        /// Минимальное значение параметра из ASCII
+        /// </summary>
+        private const int MinASCII = 1040;
+
+        /// <summary>
+        /// Максимальное значение параметра из ASCII
+        /// </summary>
+        private const int MaxASCII = 1071;
+        
         /// <summary>
         /// Случайное число
         /// </summary>
@@ -191,8 +204,8 @@ namespace View
         private static string GetInitials()
         {
             int n = 0;
-            char[] alphabet = new char[32];
-            for (int i = 1040; i <= 1071; i++)
+            char[] alphabet = new char[MaxASCII - MinASCII + 1];
+            for (int i = MinASCII; i <= MaxASCII; i++)
             {
                 alphabet[n] = Convert.ToChar(i);
                 n++;
@@ -252,7 +265,7 @@ namespace View
             {
                 "Москва",
                 "Казань",
-                "Санкт-Петерсбург",
+                "Санкт-Петербург",
                 "Томск",
                 "Кемерово",
                 "Новосибирск",
