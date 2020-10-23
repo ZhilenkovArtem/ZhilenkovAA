@@ -128,7 +128,7 @@ namespace View
         /// </summary>
         /// <param name="textBox"></param>
         /// <param name="e"></param>
-        public void SurnameTextBoxValidating(object textBox, CancelEventArgs e)
+        private void SurnameTextBoxValidating(object textBox, CancelEventArgs e)
         {
             var regex = new Regex("([А-Я]|[а-я]|[A-Z]|[a-z])");
 
@@ -141,7 +141,7 @@ namespace View
         /// </summary>
         /// <param name="textBox"></param>
         /// <param name="e"></param>
-        public void InitialsTextBoxValidating(object textBox, CancelEventArgs e)
+        private void InitialsTextBoxValidating(object textBox, CancelEventArgs e)
         {
             var regex = new Regex("(([А-Я]|[а-я]|[A-Z]|[a-z])[.]){2}");
 

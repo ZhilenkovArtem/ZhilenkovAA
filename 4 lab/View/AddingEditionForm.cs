@@ -18,7 +18,7 @@ namespace View
         /// <summary>
         /// Издание
         /// </summary>
-        private EditionBase _edition;
+        private IEdition _edition;
 
         /// <summary>
         /// Словарь
@@ -101,7 +101,7 @@ namespace View
         /// <summary>
         /// Вернуть издание
         /// </summary>
-        public EditionBase EditionDone => _edition;
+        public IEdition EditionDone => _edition;
 
         /// <summary>
         /// События при загрузке формы

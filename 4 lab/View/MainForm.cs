@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using _3_lab;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Library;
 
 namespace View
 {
@@ -15,7 +16,7 @@ namespace View
         /// <summary>
         /// Коллекция изданий
         /// </summary>
-        BindingList<EditionBase> _editions = new BindingList<EditionBase>();
+        BindingList<IEdition> _editions = new BindingList<IEdition>();
 
         /// <summary>
         /// Инициализация формы
@@ -145,7 +146,7 @@ namespace View
                     using (var fileStream = new FileStream(filePath,
                         FileMode.OpenOrCreate))
                     {
-                        var newEditions = (BindingList<EditionBase>)binaryFormatter.
+                        var newEditions = (BindingList<IEdition>)binaryFormatter.
                             Deserialize(fileStream);
 
                         foreach (var edition in newEditions)

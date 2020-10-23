@@ -146,7 +146,7 @@ namespace _3_lab
         /// Проверка правильности введенного числового значения
         /// </summary>
         /// <param name="numbers">числовое значение</param>
-        public static void ValidationDates(DateTime numbers)
+        protected static void ValidationDates(DateTime numbers)
         {
             Regex regexName = new Regex("[0-9]");
 
@@ -157,7 +157,7 @@ namespace _3_lab
         /// Проверка правильности введенного числового значения
         /// </summary>
         /// <param name="numbers">числовое значение</param>
-        public static void ValidationNumbers(int numbers)
+        protected static void ValidationNumbers(int numbers)
         {
             Regex regexName = new Regex("[0-9]");
 
@@ -169,7 +169,7 @@ namespace _3_lab
         /// </summary>
         /// <param name="simpleText">исходный текст</param>
         /// <returns>исправленный текст</returns>
-        public static string ChangeSimpleText(string simpleText)
+        protected static string ChangeSimpleText(string simpleText)
         {
             Checker.ValidationForSimpleText(simpleText);
 
@@ -183,7 +183,7 @@ namespace _3_lab
         /// </summary>
         /// <param name="capitalizedText">исходный текст</param>
         /// <returns>исправленный текст</returns>
-        public static string ChangeCapitalizedText(string capitalizedText)
+        protected static string ChangeCapitalizedText(string capitalizedText)
         {
             Checker.ValidationForSimpleText(capitalizedText);
 
@@ -224,7 +224,7 @@ namespace _3_lab
         /// </summary>
         /// <param name="text">исходный текст</param>
         /// <returns>исправленный текст</returns>
-        public static string ChangePublishingName(string text)
+        protected static string ChangePublishingName(string text)
         {
             Checker.ValidationForSimpleText(text);
 

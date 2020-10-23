@@ -105,7 +105,7 @@ namespace _3_lab
         /// </summary>
         /// <param name="dubiousWord">сомнительное слово</param>
         /// <returns>правильное слово</returns>
-        public static string ValidationSurname(string dubiousWord)
+        private static string ValidationSurname(string dubiousWord)
         {
             Checker.ValidationForSimpleText(dubiousWord);
 

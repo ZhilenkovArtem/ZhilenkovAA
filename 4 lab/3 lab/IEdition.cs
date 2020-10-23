@@ -5,7 +5,7 @@ namespace Library
     /// <summary>
     /// Издание
     /// </summary>
-    interface IEdition
+    public interface IEdition
     {
         /// <summary>
         /// Название издания
@@ -26,5 +26,11 @@ namespace Library
         /// Количество страниц
         /// </summary>
         int Pages { get; set; }
+
+        /// <summary>
+        /// Описание издания
+        /// </summary>
+        /// <returns>описание издания</returns>
+        string DescriptionEdition();
     }
 }

@@ -34,7 +34,7 @@ namespace View
         /// Получить рандомное издание
         /// </summary>
         /// <returns>рандомное издание</returns>
-        public static EditionBase GetRandomEdition()
+        public static IEdition GetRandomEdition()
         {
             int typeEdition = _random.Next(0, 3);
             
@@ -67,7 +67,7 @@ namespace View
         /// Получить случайную книгу
         /// </summary>
         /// <returns>случайная книга</returns>
-        private static EditionBase GetRandomBook()
+        private static IEdition GetRandomBook()
         {
             List<Author> authors = new List<Author>();
             authors.Add(new Author(GetSurname(), GetInitials()));
@@ -88,7 +88,7 @@ namespace View
         /// Получить сборник
         /// </summary>
         /// <returns>сборник</returns>
-        private static EditionBase GetRandomCollectedPaper()
+        private static IEdition GetRandomCollectedPaper()
         {
             var paper = new CollectedPaper()
             {
@@ -105,7 +105,7 @@ namespace View
         /// Получить диссертацию
         /// </summary>
         /// <returns>диссертация</returns>
-        private static EditionBase GetRandomDissertation()
+        private static IEdition GetRandomDissertation()
         {
             List<Author> authors = new List<Author>();
             authors.Add(new Author(GetSurname(), GetInitials()));
@@ -128,7 +128,7 @@ namespace View
         /// Получить журнал
         /// </summary>
         /// <returns>журнал</returns>
-        private static EditionBase GetRandomJournal()
+        private static IEdition GetRandomJournal()
         {
             var book = new Book()
             {

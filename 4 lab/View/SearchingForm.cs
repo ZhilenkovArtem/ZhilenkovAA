@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using Library;
 
 namespace View
 {
@@ -15,13 +16,13 @@ namespace View
         /// <summary>
         /// Коллекция изданий
         /// </summary>
-        private BindingList<EditionBase> _editions;
+        private BindingList<IEdition> _editions;
 
         /// <summary>
         /// Инициализация формы
         /// </summary>
         /// <param name="editions"></param>
-        public SearchingForm(BindingList<EditionBase> editions)
+        public SearchingForm(BindingList<IEdition> editions)
         {
             InitializeComponent();
 
@@ -32,8 +33,8 @@ namespace View
         /// <summary>
         /// Коллекция искомых изданий
         /// </summary>
-        private BindingList<EditionBase> _searchedEditions =
-            new BindingList<EditionBase>();
+        private BindingList<IEdition> _searchedEditions =
+            new BindingList<IEdition>();
         
         /// <summary>
         /// События при загрузке формы

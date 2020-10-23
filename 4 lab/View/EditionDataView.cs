@@ -1,6 +1,7 @@
 ﻿using _3_lab;
 using System.Windows.Forms;
 using System.ComponentModel;
+using Library;
 
 namespace View
 {
@@ -14,7 +15,7 @@ namespace View
         /// </summary>
         /// <param name="editions">издания</param>
         /// <param name="dataGridView">таблица</param>
-        public static void CreateTable(BindingList<EditionBase> editions,
+        public static void CreateTable(BindingList<IEdition> editions,
             DataGridView dataGridView)
         {
             BindingList<DescriptionItem> editionDescription = new BindingList<DescriptionItem>();
